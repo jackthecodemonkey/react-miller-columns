@@ -63,12 +63,11 @@ class ColumnCalculator {
     }
 
     MoveTo(columnDiff, previousPeek) {
+        const currentPeek = this.shouldShowPeek;
         if (previousPeek === !currentPeek && this.totalChilden === this.visibleColumns) {
             this.currentPosition = 0;
             return 0;
         }
-
-        const currentPeek = this.shouldShowPeek;
         let base = this.maxColumnWidth + Math.floor(this.columnMagin / 2);
         if (previousPeek === false && currentPeek) {
             base -= this.peekWidth

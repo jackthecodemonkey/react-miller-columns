@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ColumnCalculator from './ColumnCalculator';
 import './index.css';
 
@@ -43,7 +44,6 @@ class MillerColumn extends Component {
         })
         const { maxColumn, columnMagin, minColumnWidth, peekWidth, children } = this.props;
         const totalWidth = getStyleFromElement(this.wrapperRef.current, 'width');
-        console.log(totalWidth, children.length, maxColumn, columnMagin, minColumnWidth, peekWidth);
         this.columnCalculator = new ColumnCalculator(totalWidth, children.length, maxColumn, columnMagin, minColumnWidth, peekWidth)
         this.updateChildrenAndMove();
     }
@@ -78,7 +78,6 @@ class MillerColumn extends Component {
     }
 
     getChildren(props = this.props) {
-        console.log(this.columnCalculator);
         return React.Children.map(props.children, (child, index) => {
             const baseStyle = {
                 width: this.columnCalculator.maxColumnWidth,
@@ -87,7 +86,6 @@ class MillerColumn extends Component {
                     ? `0px ${this.columnCalculator.marginRight}px 0px ${this.columnCalculator.marginRight}px`
                     : `0px ${this.columnCalculator.marginRight}px 0px 0px`
             };
-            console.log(baseStyle);
             return React.cloneElement(child,
                 {
                     ...child.props,
@@ -95,9 +93,9 @@ class MillerColumn extends Component {
                         style: {
                             ...baseStyle,
                         },
+                        column: this.columnCalculator,
+                        notifyColumn: this.notifyColumn
                     },
-                    column: this.columnCalculator,
-                    notifyColumn: this.notifyColumn
                 })
         })
     }
@@ -111,6 +109,13 @@ class MillerColumn extends Component {
             </div>
         )
     }
+}
+
+MillerColumn.propTypes = {
+    maxColumn: PropTypes.number.isRequired,
+    columnMagin: PropTypes.number.isRequired,
+    minColumnWidth: PropTypes.number.isRequired,
+    peekWidth: PropTypes.number.isRequired,
 }
 
 export default MillerColumn;

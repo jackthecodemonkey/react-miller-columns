@@ -2,31 +2,78 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { MillerColumns, Column } from './MillerColumns';
-// maxColumn, columnMagin, minColumnWidth, peekWidth,
-function App() {
-  const getColumns = () => {
+
+const Row = (props) => {
+  const isPeekColumn = props.column.peekIndex === props.currentIndex;
+  const style = {
+    background: isPeekColumn ? 'skyblue' : '',
+    height: '500px',
+    border: '1px solid salmon',
+  }
+  return (
+    <div
+      onClick={isPeekColumn
+        ? props.onRemove
+        : props.onAdd}
+      style={style}>
+      Hello {props.currentIndex}
+    </div>
+  );
+}
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 7,
+    }
+    this.inc = this.inc.bind(this);
+    this.dec = this.dec.bind(this);
+  }
+
+  inc() {
+    this.setState({
+      count: ++this.state.count,
+    })
+  }
+
+  dec() {
+    this.setState({
+      count: --this.state.count,
+    })
+  }
+
+  getColumns() {
     let arr = [];
-    for (let i = 0; i < 3; i++) {
-      arr.push(<Column><div>Hello</div></Column>)
+    for (let i = 0; i < this.state.count; i++) {
+      arr.push(<Column key={i}>
+        <Row
+          onAdd={this.inc}
+          onRemove={this.dec}
+          currentIndex={i} />
+      </Column>)
     }
     return arr;
   }
-  return (
-    <div className="App">
-      <div>
-        <MillerColumns
-          maxColumn={3}
-          minColumnWidth={150}
-          columnMagin={20}
-          peekWidth={15}
-        >
-          {
-            getColumns()
-          }
-        </MillerColumns>
+
+  render() {
+    return (
+      <div className="App">
+        <div>
+          <MillerColumns
+            maxColumn={3}
+            minColumnWidth={150}
+            columnMagin={20}
+            peekWidth={30}
+          >
+            {
+              this.getColumns()
+            }
+          </MillerColumns>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
