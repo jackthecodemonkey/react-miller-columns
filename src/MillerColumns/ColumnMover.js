@@ -1,4 +1,4 @@
-class ColumnCalculator {
+class ColumnMover {
     constructor(totalWidth, totalChilden, maxColumn, columnMagin, minColumnWidth, peekWidth) {
         this.maxColumn = maxColumn;
         this.columnMagin = columnMagin;
@@ -95,4 +95,4 @@ class ColumnCalculator {
     }
 }
 
-export default ColumnCalculator;
+export default ColumnMover;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ColumnCalculator from './ColumnCalculator';
+import ColumnMover from './ColumnMover';
 import './index.css';
 
 const getStyleFromElement = (element, property) => {
@@ -20,14 +20,14 @@ class MillerColumn extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.children.length !== this.props.children.length) {
-            const previousPeek = this.columnCalculator.shouldShowPeek;
+            const previousPeek = this.columnMover.shouldShowPeek;
             const diff = nextProps.children.length - this.props.children.length;
-            this.columnCalculator.Update(nextProps.children.length);
-            const ShouldMoveSlider = this.columnCalculator.ShouldMoveSlider(previousPeek);
+            this.columnMover.Update(nextProps.children.length);
+            const ShouldMoveSlider = this.columnMover.ShouldMoveSlider(previousPeek);
             if (ShouldMoveSlider) {
-                const moveTo = this.columnCalculator.MoveTo(diff, previousPeek);
-                this.moveTo(`translateX(-${this.columnCalculator.currentPosition + moveTo}px)`);
-                this.columnCalculator.currentPosition = this.columnCalculator.currentPosition + moveTo;
+                const moveTo = this.columnMover.MoveTo(diff, previousPeek);
+                this.moveTo(`translateX(-${this.columnMover.currentPosition + moveTo}px)`);
+                this.columnMover.currentPosition = this.columnMover.currentPosition + moveTo;
             }
         }
         this.setState({
@@ -37,14 +37,14 @@ class MillerColumn extends Component {
 
     componentDidMount() {
         window.addEventListener('resize', (e) => {
-            if (this.columnCalculator) {
-                this.columnCalculator.UpdateTotalWidth(getStyleFromElement(this.wrapperRef.current, 'width'));
+            if (this.columnMover) {
+                this.columnMover.UpdateTotalWidth(getStyleFromElement(this.wrapperRef.current, 'width'));
                 this.updateChildrenAndMove();
             }
         })
         const { maxColumn, columnMagin, minColumnWidth, peekWidth, children } = this.props;
         const totalWidth = getStyleFromElement(this.wrapperRef.current, 'width');
-        this.columnCalculator = new ColumnCalculator(totalWidth, children.length, maxColumn, columnMagin, minColumnWidth, peekWidth)
+        this.columnMover = new ColumnMover(totalWidth, children.length, maxColumn, columnMagin, minColumnWidth, peekWidth)
         this.updateChildrenAndMove();
     }
 
@@ -52,7 +52,7 @@ class MillerColumn extends Component {
         this.setState({
             children: this.getChildren(),
         }, () => {
-            if (this.columnCalculator.shouldShowPeek) this.moveToEnd();
+            if (this.columnMover.shouldShowPeek) this.moveToEnd();
             else this.moveToFirst();
         })
     }
@@ -64,13 +64,13 @@ class MillerColumn extends Component {
 
     moveToFirst() {
         this.moveTo(`translateX(0px)`);
-        this.columnCalculator.currentPosition = 0;
+        this.columnMover.currentPosition = 0;
     }
 
     moveToEnd() {
-        const moveTo = this.columnCalculator.MoveToEnd();
+        const moveTo = this.columnMover.MoveToEnd();
         this.moveTo(`translateX(-${moveTo}px)`);
-        this.columnCalculator.currentPosition = moveTo;
+        this.columnMover.currentPosition = moveTo;
     }
 
     notifyColumn() {
@@ -80,11 +80,11 @@ class MillerColumn extends Component {
     getChildren(props = this.props) {
         return React.Children.map(props.children, (child, index) => {
             const baseStyle = {
-                width: this.columnCalculator.maxColumnWidth,
+                width: this.columnMover.maxColumnWidth,
                 height: this.props.height,
                 margin: index === 0
-                    ? `0px ${this.columnCalculator.marginRight}px 0px ${this.columnCalculator.marginRight}px`
-                    : `0px ${this.columnCalculator.marginRight}px 0px 0px`
+                    ? `0px ${this.columnMover.marginRight}px 0px ${this.columnMover.marginRight}px`
+                    : `0px ${this.columnMover.marginRight}px 0px 0px`
             };
             return React.cloneElement(child,
                 {
@@ -93,7 +93,7 @@ class MillerColumn extends Component {
                         style: {
                             ...baseStyle,
                         },
-                        column: this.columnCalculator,
+                        column: this.columnMover,
                         notifyColumn: this.notifyColumn
                     },
                 })
