@@ -1,24 +1,30 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import { MillerColumns, Column } from './MillerColumns';
+// maxColumn, columnMagin, minColumnWidth, peekWidth,
 function App() {
+  const getColumns = () => {
+    let arr = [];
+    for (let i = 0; i < 3; i++) {
+      arr.push(<Column><div>Hello</div></Column>)
+    }
+    return arr;
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div>
+        <MillerColumns
+          maxColumn={3}
+          minColumnWidth={150}
+          columnMagin={20}
+          peekWidth={15}
         >
-          Learn React
-        </a>
-      </header>
+          {
+            getColumns()
+          }
+        </MillerColumns>
+      </div>
     </div>
   );
 }
