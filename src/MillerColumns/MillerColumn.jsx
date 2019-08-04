@@ -3,8 +3,20 @@ import PropTypes from 'prop-types';
 import ColumnMover from './ColumnMover';
 import './index.css';
 
+const defaultTranstion = 200;
+
 const getStyleFromElement = (element, property) => {
     return element && property && Number(window.getComputedStyle(element)[property].replace('px', ''));
+}
+
+const debounce = (fn, context = null, dealy = defaultTranstion) => {
+    let timeout = null;
+    return (...args) => {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            fn.apply(context, args);
+        }, dealy);
+    }
 }
 
 class MillerColumn extends Component {
@@ -12,7 +24,7 @@ class MillerColumn extends Component {
         super(props);
         this.wrapperRef = React.createRef();
         this.innerWrapper = React.createRef();
-        this.notifyColumn = this.notifyColumn.bind(this);
+        this.notifyTransition = debounce(this.notifyTransition, this, defaultTranstion);
         this.state = {
             children: null,
         }
@@ -31,7 +43,10 @@ class MillerColumn extends Component {
             }
         }
         this.setState({
-            children: this.getChildren(nextProps),
+            children: this.getChildren(
+                nextProps,
+                this.columnMover.ShouldMoveSlider(this.columnMover.shouldShowPeek) || false
+            ),
         })
     }
 
@@ -39,7 +54,7 @@ class MillerColumn extends Component {
         window.addEventListener('resize', (e) => {
             if (this.columnMover) {
                 this.columnMover.UpdateTotalWidth(getStyleFromElement(this.wrapperRef.current, 'width'));
-                this.updateChildrenAndMove();
+                this.updateChildrenAndMove(true);
             }
         })
         const { maxColumn, columnMagin, minColumnWidth, peekWidth, children } = this.props;
@@ -48,9 +63,9 @@ class MillerColumn extends Component {
         this.updateChildrenAndMove();
     }
 
-    updateChildrenAndMove() {
+    updateChildrenAndMove(transitioning = false) {
         this.setState({
-            children: this.getChildren(),
+            children: this.getChildren(this.props, transitioning),
         }, () => {
             if (this.columnMover.shouldShowPeek) this.moveToEnd();
             else this.moveToFirst();
@@ -58,8 +73,9 @@ class MillerColumn extends Component {
     }
 
     moveTo(value) {
-        this.innerWrapper.current.style.transition = 'transform 300ms ease';
+        this.innerWrapper.current.style.transition = `transform ${defaultTranstion}ms ease`;
         this.innerWrapper.current.style.transform = value;
+        this.notifyTransition();
     }
 
     moveToFirst() {
@@ -73,11 +89,13 @@ class MillerColumn extends Component {
         this.columnMover.currentPosition = moveTo;
     }
 
-    notifyColumn() {
-
+    notifyTransition() {
+        this.setState({
+            children: this.getChildren(this.props, false),
+        })
     }
 
-    getChildren(props = this.props) {
+    getChildren(props = this.props, transitioning = false) {
         return React.Children.map(props.children, (child, index) => {
             const baseStyle = {
                 width: this.columnMover.maxColumnWidth,
@@ -93,9 +111,9 @@ class MillerColumn extends Component {
                         style: {
                             ...baseStyle,
                         },
+                        transitioning,
                         peekColumn: index === this.columnMover.peekIndex,
                         column: this.columnMover,
-                        notifyColumn: this.notifyColumn
                     },
                 })
         })

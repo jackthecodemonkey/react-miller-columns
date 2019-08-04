@@ -17,10 +17,10 @@ class ColumnMover {
         this.totalChilden = childrenLen;
     }
 
-    get peekIndex(){
-        return this.shouldShowPeek 
-        ? this.totalChilden - this.visibleColumns - 1 
-        : -1; 
+    get peekIndex() {
+        return this.shouldShowPeek
+            ? this.totalChilden - this.visibleColumns - 1
+            : -1;
     }
 
     get marginRight() {
