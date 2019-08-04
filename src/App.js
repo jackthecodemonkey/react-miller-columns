@@ -4,15 +4,14 @@ import './App.css';
 import { MillerColumns, Column } from './MillerColumns';
 
 const Row = (props) => {
-  const isPeekColumn = props.column.peekIndex === props.currentIndex;
   const style = {
-    background: isPeekColumn ? 'skyblue' : '',
+    background: props.peekColumn ? 'skyblue' : '',
     height: '500px',
     border: '1px solid salmon',
   }
   return (
     <div
-      onClick={isPeekColumn
+      onClick={props.peekColumn
         ? props.onRemove
         : props.onAdd}
       style={style}>
@@ -61,7 +60,7 @@ class App extends React.Component {
       <div className="App">
         <div>
           <MillerColumns
-            maxColumn={3}
+            maxColumn={5}
             minColumnWidth={150}
             columnMagin={20}
             peekWidth={30}

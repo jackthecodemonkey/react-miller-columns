@@ -93,6 +93,7 @@ class MillerColumn extends Component {
                         style: {
                             ...baseStyle,
                         },
+                        peekColumn: index === this.columnMover.peekIndex,
                         column: this.columnMover,
                         notifyColumn: this.notifyColumn
                     },
