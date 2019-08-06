@@ -7,10 +7,9 @@ class Column extends Component {
     }
 
     getChildren() {
-        return React.Children.map(this.props.children, (child) => {
-            const { style, ...otherProps } = child.props;
-            return React.cloneElement(child, { ...otherProps, ...this.props })
-        })
+        const { children, style, ...others } = this.props;
+        const { style: childrenStyle, ...otherChildrenProps } = children.props;
+        return React.cloneElement(children, { style: childrenStyle, ...otherChildrenProps, ...others });
     }
 
     render() {
