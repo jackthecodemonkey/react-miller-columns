@@ -6,7 +6,9 @@ import { MillerColumns, Column } from './MillerColumns';
 const Row = (props) => {
   const style = {
     transition: 'background 200ms',
-    background: props.peekColumn && !props.transitioning ? 'skyblue' : '',
+    background: props.peekColumn && !props.transitioning
+      ? 'skyblue'
+      : '',
     height: '500px',
     border: '1px solid salmon',
   }
