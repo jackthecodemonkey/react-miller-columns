@@ -1,13 +1,12 @@
-.miller{
+.miller {
     display: flex;
     flex-direction: row;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid black;
     overflow: hidden;
   }
   
-  .wrapper{
+  .wrapper {
     display: flex;
     position: relative;
     width: 10000px;

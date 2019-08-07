@@ -3,31 +3,42 @@ import logo from './logo.svg';
 import './App.css';
 import { MillerColumns, Column } from './MillerColumns';
 
-const Row = (props) => {
-  const style = {
-    transition: 'background 200ms',
-    background: props.peekColumn && !props.transitioning
-      ? 'skyblue'
-      : '',
-    height: '500px',
-    border: '1px solid salmon',
+class Row extends React.Component {
+  constructor(props){
+    super(props);
   }
-  return (
-    <div
-      onClick={props.peekColumn
-        ? props.onRemove
-        : props.onAdd}
-      style={style}>
-      Hello {props.currentIndex}
-    </div>
-  );
+
+  render() {
+    const style = {
+      transition: 'background 200ms',
+      background: this.props.peekColumn && !this.props.transitioning
+        ? '#bae6f9'
+        : '',
+      height: '500px',
+      border: '1px solid salmon',
+      borderRadius: '5px',
+      display: 'flex',
+      fontSize: '14px',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }
+    return (
+      <div
+        onClick={this.props.peekColumn
+          ? this.props.onRemove
+          : this.props.onAdd}
+        style={style}>
+        Column {this.props.currentIndex}
+      </div>
+    );
+  }
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 7,
+      count: 4,
     }
     this.inc = this.inc.bind(this);
     this.dec = this.dec.bind(this);
@@ -60,19 +71,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <div>
+      <div style={{marginTop: '50px'}} className="App">
           <MillerColumns
             maxColumn={5}
             minColumnWidth={150}
-            columnMagin={20}
+            maxColumnWidth={200}
+            columnMagin={30}
             peekWidth={30}
           >
             {
               this.getColumns()
             }
           </MillerColumns>
-        </div>
       </div>
     );
   }

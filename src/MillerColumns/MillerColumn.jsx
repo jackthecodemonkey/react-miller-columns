@@ -73,8 +73,8 @@ class MillerColumn extends Component {
     }
 
     moveTo(value) {
-        this.innerWrapper.current.style.transition = `transform ${defaultTranstion}ms ease`;
-        this.innerWrapper.current.style.transform = value;
+        if (this.innerWrapper.current) this.innerWrapper.current.style.transition = `transform ${defaultTranstion}ms ease`;
+        if (this.innerWrapper.current) this.innerWrapper.current.style.transform = value;
         this.notifyTransition();
     }
 
