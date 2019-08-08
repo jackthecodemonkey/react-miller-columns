@@ -4,7 +4,7 @@ import './App.css';
 import { MillerColumns, Column } from './MillerColumns';
 
 class Row extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
@@ -46,13 +46,13 @@ class App extends React.Component {
 
   inc() {
     this.setState({
-      count: ++this.state.count,
+      count: this.state.count + 2,
     })
   }
 
   dec() {
     this.setState({
-      count: --this.state.count,
+      count: this.state.count - 2,
     })
   }
 
@@ -71,17 +71,17 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={{marginTop: '50px'}} className="App">
-          <MillerColumns
-            maxColumn={5}
-            minColumnWidth={180}
-            columnMagin={35}
-            peekWidth={35}
-          >
-            {
-              this.getColumns()
-            }
-          </MillerColumns>
+      <div style={{ marginTop: '50px' }} className="App">
+        <MillerColumns
+          maxColumn={5}
+          minColumnWidth={180}
+          columnMagin={35}
+          peekWidth={35}
+        >
+          {
+            this.getColumns()
+          }
+        </MillerColumns>
       </div>
     );
   }

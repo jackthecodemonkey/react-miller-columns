@@ -36,6 +36,14 @@ describe('ColumnMover model', () => {
         expect(mover.visibleColumns).toEqual(4);
     })
 
+    it('invisibleColumns property should return 3', () => {
+        expect(mover.invisibleColumns).toEqual(3);
+    })
+
+    it('invisibleColumnWidth should be same as minColumnWidth', () => {
+        expect(mover.invisibleColumnWidth).toEqual(150);
+    })
+
     it('peekIndex property should return 2', () => {
         expect(mover.peekIndex).toEqual(2);
     })
@@ -54,12 +62,12 @@ describe('ColumnMover model', () => {
     })
 
     it('MoveToEnd property', () => {
-        expect(mover.MoveToEnd()).toEqual(519);
+        expect(mover.MoveToEnd()).toEqual(450);
     })
 
     it('MoveTo property', () => {
-        expect(mover.MoveTo(1, false)).toEqual(153);
-        expect(mover.MoveTo(1, true)).toEqual(183);
+        expect(mover.MoveTo(1, false)).toEqual(130);
+        expect(mover.MoveTo(1, true)).toEqual(160);
     })
 
 })
