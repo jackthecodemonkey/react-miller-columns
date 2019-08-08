@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import ColumnMover from './ColumnMover';
 import './index.css';
 
-const defaultTranstion = 200;
-
 const getStyleFromElement = (element, property) => {
     return element && property && Number(window.getComputedStyle(element)[property].replace('px', ''));
 }
 
-const debounce = (fn, context = null, dealy = defaultTranstion) => {
+const debounce = (fn, context = null, delay) => {
     let timeout = null;
     return (...args) => {
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(() => {
             fn.apply(context, args);
-        }, dealy);
+        }, delay);
     }
 }
 
@@ -24,7 +22,7 @@ class MillerColumn extends Component {
         super(props);
         this.wrapperRef = React.createRef();
         this.innerWrapper = React.createRef();
-        this.notifyTransition = debounce(this.notifyTransition, this, defaultTranstion);
+        this.notifyTransition = debounce(this.notifyTransition, this, this.props.animationSpeed);
         this.previousInvisibleColumns = null;
         this.state = {
             children: null,
@@ -73,7 +71,7 @@ class MillerColumn extends Component {
             if (this.columnMover.shouldShowPeek) {
                 if (this.previousInvisibleColumns !== this.columnMover.invisibleColumns) {
                     this.moveToEnd();
-                }
+                } else this.notifyTransition();
             }
             else this.moveToFirst();
             this.previousInvisibleColumns = this.columnMover.invisibleColumns;
@@ -81,7 +79,7 @@ class MillerColumn extends Component {
     }
 
     moveTo(value) {
-        if (this.innerWrapper.current) this.innerWrapper.current.style.transition = `transform ${defaultTranstion}ms ease`;
+        if (this.innerWrapper.current) this.innerWrapper.current.style.transition = `transform ${this.props.animationSpeed}ms ease`;
         if (this.innerWrapper.current) this.innerWrapper.current.style.transform = value;
         this.notifyTransition();
     }
@@ -150,6 +148,11 @@ MillerColumn.propTypes = {
     columnMagin: PropTypes.number.isRequired,
     minColumnWidth: PropTypes.number.isRequired,
     peekWidth: PropTypes.number.isRequired,
+    animationSpeed: PropTypes.number
+}
+
+MillerColumn.defaultProps = {
+    animationSpeed: 200,
 }
 
 export default MillerColumn;
