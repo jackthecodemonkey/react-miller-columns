@@ -35,7 +35,7 @@ class MillerColumn extends Component {
             const diff = nextProps.children.length - this.props.children.length;
             this.columnMover.Update(nextProps.children.length);
             const ShouldMoveSlider = this.columnMover.ShouldMoveSlider(previousPeek);
-            if (!previousPeek && ShouldMoveSlider) {
+            if ((!previousPeek && ShouldMoveSlider) || (diff > 1)) {
                 this.moveToEnd();
             } else if (ShouldMoveSlider) {
                 const moveTo = this.columnMover.MoveTo(diff, previousPeek);

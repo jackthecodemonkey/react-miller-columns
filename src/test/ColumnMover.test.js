@@ -65,9 +65,17 @@ describe('ColumnMover model', () => {
         expect(mover.MoveToEnd()).toEqual(450);
     })
 
-    it('MoveTo property', () => {
+    it('MoveTo property with 1 column', () => {
         expect(mover.MoveTo(1, false)).toEqual(130);
         expect(mover.MoveTo(1, true)).toEqual(160);
     })
 
+    it('MoveTo property with adding / removing more than a column', () => {
+        expect(mover.MoveTo(2, false)).toEqual(290);
+        expect(mover.MoveTo(-2, false)).toEqual(-290);
+   
+        expect(mover.MoveTo(2, true)).toEqual(320);
+        expect(mover.MoveTo(-2, true)).toEqual(-320);
+    })
+ 
 })

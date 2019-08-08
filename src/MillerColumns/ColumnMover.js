@@ -82,7 +82,7 @@ class ColumnMover {
             return 0;
         }
 
-        let base = this.invisibleColumnWidth + Math.floor(this.columnMagin / 2);
+        let base = (this.invisibleColumnWidth + Math.floor(this.columnMagin / 2)) * Math.abs(columnDiff);
         if (previousPeek === false && currentPeek) {
             base -= this.peekWidth
         } else if (previousPeek && !currentPeek) {
