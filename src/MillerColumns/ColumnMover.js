@@ -40,6 +40,10 @@ class ColumnMover {
         return visibleColumn;
     }
 
+    get invisibleColumnWidth() {
+        return this.peekWidth * 2;
+    }
+
     get maxColumnsInContainer() {
         return this.GetColumns(this.shouldShowPeek ? this.peekWidth : 0, this.maxColumn);
     }
@@ -51,6 +55,13 @@ class ColumnMover {
         return Math.floor((total - margin) / numberOfColumns);
     }
 
+    get invisibleColumns() {
+        if (this.shouldShowPeek) {
+            return this.totalChilden - this.visibleColumns;
+        }
+        return 0;
+    }
+
     ShouldMoveSlider(previousPeek) {
         if (previousPeek !== this.shouldShowPeek) return true;
         return this.totalChilden > this.maxColumn || this.shouldShowPeek
@@ -58,7 +69,7 @@ class ColumnMover {
 
     MoveToEnd() {
         const diff = this.totalChilden - this.visibleColumns;
-        let move = (this.maxColumnWidth * diff) + (Math.floor(this.columnMagin / 2) * diff) - this.peekWidth;
+        let move = (this.invisibleColumnWidth * diff) + (Math.floor(this.columnMagin / 2) * diff) - this.peekWidth;
         return move;
     }
 
@@ -68,7 +79,8 @@ class ColumnMover {
             this.currentPosition = 0;
             return 0;
         }
-        let base = this.maxColumnWidth + Math.floor(this.columnMagin / 2);
+
+        let base = this.invisibleColumnWidth + Math.floor(this.columnMagin / 2);
         if (previousPeek === false && currentPeek) {
             base -= this.peekWidth
         } else if (previousPeek && !currentPeek) {

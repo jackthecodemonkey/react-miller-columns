@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ColumnMover from './ColumnMover';
 import './index.css';
 
-const defaultTranstion = 200;
+const defaultTranstion = 2000;
 
 const getStyleFromElement = (element, property) => {
     return element && property && Number(window.getComputedStyle(element)[property].replace('px', ''));
@@ -25,6 +25,7 @@ class MillerColumn extends Component {
         this.wrapperRef = React.createRef();
         this.innerWrapper = React.createRef();
         this.notifyTransition = debounce(this.notifyTransition, this, defaultTranstion);
+        this.previousInvisibleColumns = null;
         this.state = {
             children: null,
         }
@@ -69,8 +70,13 @@ class MillerColumn extends Component {
         this.setState({
             children: this.getChildren(this.props, transitioning),
         }, () => {
-            if (this.columnMover.shouldShowPeek) this.moveToEnd();
+            if (this.columnMover.shouldShowPeek) {
+                if (this.previousInvisibleColumns !== this.columnMover.invisibleColumns) {
+                    this.moveToEnd();
+                }
+            }
             else this.moveToFirst();
+            this.previousInvisibleColumns = this.columnMover.invisibleColumns;
         })
     }
 
@@ -99,8 +105,15 @@ class MillerColumn extends Component {
 
     getChildren(props = this.props, transitioning = false) {
         return React.Children.map(props.children, (child, index) => {
+
+            const width = this.columnMover.invisibleColumns
+                ? index < this.columnMover.invisibleColumns
+                    ? this.columnMover.invisibleColumnWidth
+                    : this.columnMover.maxColumnWidth
+                : this.columnMover.maxColumnWidth;
+
             const baseStyle = {
-                width: this.columnMover.maxColumnWidth,
+                width: width,
                 height: this.props.height,
                 margin: index === 0
                     ? `0px ${this.columnMover.marginRight}px 0px ${this.columnMover.marginRight}px`

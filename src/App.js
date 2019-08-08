@@ -38,7 +38,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 4,
+      count: 1,
     }
     this.inc = this.inc.bind(this);
     this.dec = this.dec.bind(this);
@@ -74,8 +74,7 @@ class App extends React.Component {
       <div style={{marginTop: '50px'}} className="App">
           <MillerColumns
             maxColumn={5}
-            minColumnWidth={150}
-            maxColumnWidth={200}
+            minColumnWidth={200}
             columnMagin={30}
             peekWidth={30}
           >
