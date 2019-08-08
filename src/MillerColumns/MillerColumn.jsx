@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ColumnMover from './ColumnMover';
 import './index.css';
 
-const defaultTranstion = 2000;
+const defaultTranstion = 200;
 
 const getStyleFromElement = (element, property) => {
     return element && property && Number(window.getComputedStyle(element)[property].replace('px', ''));

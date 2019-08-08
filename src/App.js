@@ -38,7 +38,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 1,
+      count: 8,
     }
     this.inc = this.inc.bind(this);
     this.dec = this.dec.bind(this);

@@ -41,7 +41,7 @@ class ColumnMover {
     }
 
     get invisibleColumnWidth() {
-        return this.peekWidth * 2;
+        return this.minColumnWidth;
     }
 
     get maxColumnsInContainer() {
@@ -63,7 +63,9 @@ class ColumnMover {
     }
 
     ShouldMoveSlider(previousPeek) {
-        if (previousPeek !== this.shouldShowPeek) return true;
+        if (previousPeek !== this.shouldShowPeek) {
+            return true;
+        }
         return this.totalChilden > this.maxColumn || this.shouldShowPeek
     }
 
