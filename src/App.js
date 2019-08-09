@@ -1,87 +1,55 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { MillerColumns, Column } from './MillerColumns';
-
-class Row extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
-  render() {
-    const style = {
-      transition: 'background 200ms',
-      background: this.props.peekColumn && !this.props.transitioning
-        ? '#bae6f9'
-        : '',
-      height: '500px',
-      border: '1px solid salmon',
-      borderRadius: '5px',
-      display: 'flex',
-      fontSize: '14px',
-      flexDirection: 'column',
-      justifyContent: 'center',
-    }
-    return (
-      <div
-        onClick={this.props.peekColumn
-          ? this.props.onRemove
-          : this.props.onAdd}
-        style={style}>
-        Column {this.props.currentIndex}
-      </div>
-    );
-  }
-}
+import sampleTree from './sample/sampleTree';
+import Model from './sample/model';
+import Row from './sample/Row';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 3,
+      tree: new Model(sampleTree)
     }
-    this.inc = this.inc.bind(this);
-    this.dec = this.dec.bind(this);
+    this.onRowClick = this.onRowClick.bind(this);
   }
 
-  inc() {
+  onRowClick(label) {
+    this.state.tree.FindAndSetSelected(label);
     this.setState({
-      count: ++this.state.count,
+      tree: this.state.tree,
     })
   }
 
-  dec() {
-    this.setState({
-      count: --this.state.count,
-    })
-  }
-
-  getColumns() {
-    let arr = [];
-    for (let i = 0; i < this.state.count; i++) {
-      arr.push(<Column key={i}>
+  getCol(tree, index) {
+    return (
+      <Column key={index}>
         <Row
-          onAdd={this.inc}
-          onRemove={this.dec}
-          currentIndex={i} />
+          onRowClick={this.onRowClick}
+          tree={tree} />
       </Column>)
-    }
-    return arr;
+  }
+
+  getColumns(tree, columns = [], localIndex = 0) {
+    let index = localIndex || 0;
+    columns.push(this.getCol(tree, index));
+    if (!tree.selectedChild) return columns;
+    return this.getColumns(tree.NextNode, columns, ++localIndex);
   }
 
   render() {
     return (
-      <div style={{marginTop: '50px'}} className="App">
-          <MillerColumns
-            maxColumn={5}
-            minColumnWidth={180}
-            columnMagin={35}
-            peekWidth={35}
-          >
-            {
-              this.getColumns()
-            }
-          </MillerColumns>
+      <div style={{ marginTop: '50px' }} className="App">
+        <MillerColumns
+          maxColumn={4}
+          minColumnWidth={150}
+          columnMagin={35}
+          peekWidth={35}
+        >
+          {
+            this.getColumns(this.state.tree)
+          }
+        </MillerColumns>
       </div>
     );
   }
