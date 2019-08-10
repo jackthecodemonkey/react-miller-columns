@@ -30,9 +30,9 @@ class MillerColumn extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        const diff = nextProps.children.length - this.props.children.length;
         if (nextProps.children.length !== this.props.children.length) {
             const previousPeek = this.columnMover.shouldShowPeek;
-            const diff = nextProps.children.length - this.props.children.length;
             this.columnMover.Update(nextProps.children.length);
             const ShouldMoveSlider = this.columnMover.ShouldMoveSlider(previousPeek);
             if ((!previousPeek && ShouldMoveSlider) || (diff > 1)) {
@@ -46,7 +46,7 @@ class MillerColumn extends Component {
         this.setState({
             children: this.getChildren(
                 nextProps,
-                this.columnMover.ShouldMoveSlider(this.columnMover.shouldShowPeek) || false
+                diff !== 0
             ),
         })
     }
