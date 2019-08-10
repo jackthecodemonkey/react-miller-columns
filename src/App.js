@@ -21,7 +21,7 @@ class App extends React.Component {
     })
   }
 
-  getCol(tree, index) {
+  getColumn(tree, index) {
     return (
       <Column key={index}>
         <Row
@@ -32,7 +32,7 @@ class App extends React.Component {
 
   getColumns(tree, columns = [], localIndex = 0) {
     let index = localIndex || 0;
-    columns.push(this.getCol(tree, index));
+    columns.push(this.getColumn(tree, index));
     if (!tree.selectedChild) return columns;
     return this.getColumns(tree.NextNode, columns, ++localIndex);
   }

@@ -1,20 +1,34 @@
 {
   "name": "react-miller-columns",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
+  "version": "1.0.0",
+  "private": false,
+  "license": "ISC",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "peerDependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "react-test-renderer": "^16.8.6"
+    "react-scripts": "3.0.1"
   },
+  "author": "Jack",
   "scripts": {
+    "publish:npm": "SET NODE_ENV=production && if exist dist rmdir /s /q dist && mkdir dist && npx babel src/MillerColumns --out-dir dist --copy-files",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "files": ["dist"],
+  "keywords": [
+    "react",
+    "react component",
+    "react tree viewer",
+    "react millercolumns",
+    "react columns"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jackthecodemonkey/react-miller-columns"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,6 +46,9 @@
     ]
   },
   "devDependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "react-test-renderer": "^16.8.6"
   }
 }
