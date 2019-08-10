@@ -13,12 +13,16 @@
   "author": "Jack",
   "scripts": {
     "publish:npm": "SET NODE_ENV=production && if exist dist rmdir /s /q dist && mkdir dist && npx babel src/MillerColumns --out-dir dist --copy-files",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "react",
     "react component",
@@ -30,6 +34,7 @@
     "type": "git",
     "url": "https://github.com/jackthecodemonkey/react-miller-columns"
   },
+  "homepage": "https://github.com/jackthecodemonkey/react-miller-columns",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -49,6 +54,7 @@
     "prop-types": "^15.7.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "react-test-renderer": "^16.8.6"
-  }
+    "react-test-renderer": "^16.8.6",
+    "gh-pages": "^2.1.1"
+  },
 }
