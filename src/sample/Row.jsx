@@ -16,10 +16,15 @@ const getStyle = (showBg) => {
 }
 
 const Row = (props) => {
+    const targetNode = props.tree.IsParentNode
+        ? props.column.visibleColumns === 1 && props.peekColumn 
+          ? null
+          : props.tree.selectedChild || props.tree.label
+        : props.column.visibleColumns === 1 && props.peekColumn
+            ? props.tree.label || props.tree.selectedChild
+            : props.tree.selectedChild || props.tree.label
     return (
-        <div onClick={() => props.peekColumn && props.onRowClick(
-            props.tree.selectedChild || props.tree.label,
-        )}
+        <div onClick={() => props.peekColumn && props.onRowClick(targetNode)}
             style={getStyle(props.peekColumn && !props.transitioning)}>
             {
                 props.tree.children.length
