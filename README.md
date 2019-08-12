@@ -93,7 +93,7 @@ class App extends React.Component {
 ```
 
 
-**The following is a bit more complex than the basic one above :)**
+**Advanced example**
 
 The full source code is availble at `/src/sample` 
 
