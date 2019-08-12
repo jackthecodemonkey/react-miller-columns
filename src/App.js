@@ -24,10 +24,9 @@ class App extends React.Component {
   getColumn(tree, index) {
     return (
       <Column key={index}>
-        <Row
-          onRowClick={this.onRowClick}
-          tree={tree} />
-      </Column>)
+        <Row onRowClick={this.onRowClick} tree={tree} />
+      </Column>
+    )
   }
 
   getColumns(tree, columns = [], localIndex = 0) {

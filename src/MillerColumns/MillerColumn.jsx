@@ -29,7 +29,7 @@ class MillerColumn extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         const diff = nextProps.children.length - this.props.children.length;
         if (nextProps.children.length !== this.props.children.length) {
             const previousPeek = this.columnMover.shouldShowPeek;
