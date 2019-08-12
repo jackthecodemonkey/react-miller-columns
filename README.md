@@ -4,13 +4,9 @@
 
 React-Millercolumns helps you create tree viewers!
 
-| Parameters  | Type | Description | Required |
-| ------------| ---- | ----------- | -------- |
-| maxColumn   | Number | Maximum number of visible columns | Yes | 
-| minColumnWidth   | Number | Minimum width of each column | Yes |
-| columnMagin   | Number | Margin between columns | Yes |
-| peekWidth   | Number | Width of the Peek column | Yes |
-| animationSpeed   | Number | Animation speed of moving columns | No |
+- The React-Millercolumns only cares how many `Column` components passed in via `props.children`
+and updates UI. It doesn't care what contents we render. 
+- You have a control over how to use the component.
 
 **Basic example**
 ```
@@ -96,30 +92,8 @@ class App extends React.Component {
 }
 ```
 
-The React-Millercolumns only listens how many `Column` components passed in as `props.children`
-and updates UI. 
-You have a control over how to use the component.
 
-Each of your content needs to be wrapped with `Column` component so that it can access the following via props
-
-| Name | Type | Description |
-| ----------| ------ | ----------------------- |
-| peekColumn | Boolean | Indicates if the column is the peek column | 
-| transitioning | Boolean | Indicates if the millercolumn is being resized or a number of columns being updated |
-| column | Object | Instance of ColumnMover class, details below |
-
-`column` object passed via props is mostly internal use. however some of properties can be useful
-
-| Name | Type | Description |
-| ----------| ------ | ----------------------- |
-| totalWidth | Number | Current width of Millercolumns | 
-| maxColumnWidth | Number | Current width of column |
-| marginRight | Number | Current margin of column |
-| shouldShowPeek | Boolean | Indicates if Millercolumns should show the peek column |
-| peekIndex | Number | Current index of peek column |
-| visibleColumns | Number | Current number of visible columns |
-
-**The following is a bit more complex example than the basic one above :)**
+**The following is a bit more complex than the basic one above :)**
 
 The full source code is availble at `/src/sample` 
 
@@ -178,4 +152,43 @@ class App extends React.Component {
   }
 }
 ```
+
+**Api**
+
+**MillerColumns**
+
+| Props  | Type | Description | Required |
+| ------------| ---- | ----------- | -------- |
+| maxColumn   | Number | Maximum number of visible columns | Yes | 
+| minColumnWidth   | Number | Minimum width of each column | Yes |
+| columnMagin   | Number | Margin between columns | Yes |
+| peekWidth   | Number | Width of the Peek column | Yes |
+| children   | Array | Array of `Column` component | Yes |
+| animationSpeed   | Number | Animation speed of moving columns | No |
+
+**Column**
+
+| Props  | Type | Description | Required |
+| ------------| ---- | ----------- | -------- |
+| style   | Object | style object `Column`| No | 
+
+Each of your content component needs to be wrapped with `Column` component so that it can access the following via props
+
+| Name | Type | Description |
+| ----------| ------ | ----------------------- |
+| peekColumn | Boolean | Indicates if the column is the peek column | 
+| transitioning | Boolean | Indicates if the millercolumn is being resized or a number of columns being updated |
+| column | Object | Instance of ColumnMover class, details below |
+
+`column` object passed via props is mostly internal use. however some of properties can be useful
+
+| Name | Type | Description |
+| ----------| ------ | ----------------------- |
+| totalWidth | Number | Current width of Millercolumns | 
+| maxColumnWidth | Number | Current width of column |
+| marginRight | Number | Current margin of column |
+| shouldShowPeek | Boolean | Indicates if Millercolumns should show the peek column |
+| peekIndex | Number | Current index of peek column |
+| visibleColumns | Number | Current number of visible columns |
+
 
