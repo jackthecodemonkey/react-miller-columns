@@ -8,6 +8,10 @@ React-Millercolumns helps you create tree viewers!
 and updates UI. It doesn't care what contents we render. 
 - You have a control over how to use the component.
 
+**Installation**
+
+`npm i react-miller-columns --save`
+
 **Basic example**
 
 ![Screenshot](/public/screenshot/millerColumnsBasic.gif)
