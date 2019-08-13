@@ -29,6 +29,7 @@ class MillerColumn extends Component {
         }
     }
 
+    /* TODO:: Replace the following with other lifecycle methods */
     UNSAFE_componentWillReceiveProps(nextProps) {
         const diff = nextProps.children.length - this.props.children.length;
         if (nextProps.children.length !== this.props.children.length) {
@@ -103,7 +104,6 @@ class MillerColumn extends Component {
 
     getChildren(props = this.props, transitioning = false) {
         return React.Children.map(props.children, (child, index) => {
-
             const width = this.columnMover.invisibleColumns
                 ? index < this.columnMover.invisibleColumns
                     ? this.columnMover.invisibleColumnWidth
