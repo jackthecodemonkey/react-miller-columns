@@ -9,6 +9,9 @@ and updates UI. It doesn't care what contents we render.
 - You have a control over how to use the component.
 
 **Basic example**
+
+![Screenshot](/public/screenshot/millerColumnsBasic.gif)
+
 ```
 import { MillerColumns, Column } from './MillerColumns';
 
@@ -94,6 +97,8 @@ class App extends React.Component {
 
 
 **Advanced example**
+
+![Screenshot](/public/screenshot/millerColumns.gif)
 
 The full source code is availble at `/src/sample` 
 
